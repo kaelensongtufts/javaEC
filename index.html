@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Slideshow</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body, html {
+            background-color: rgb(226, 220, 183);
+        }
+        #slideshow-container {
+            width: auto;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            border-width: 10px;
+            border-style: dashed;
+            border-color: rgb(230, 211, 118);
+        }
+        img {
+            height: 100%;
+        }
+        button:hover {
+            cursor: pointer;
+        }
+        .all {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        button {
+            border-radius: 5px;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: rgb(230, 211, 118);
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <div class="all">
+    <div id="slideshow-container">
+        <img id="slideshow" src="images/image1.jpg" alt="Slideshow Image">
+    </div>
+    </div>
+    <div class="all">
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+    </div>
+    <div class="all">
+    Click "start" to start the slideshow!
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var images = [
+                "images/image1.jpg",
+                "images/image2.jpg",
+                "images/image3.jpeg",
+                "images/image4.jpeg",
+                "images/image5.jpeg"
+            ];
+            var index = 0;
+            var interval;
+
+            function startSlideshow() {
+                interval = setInterval(function() {
+                    $("#slideshow").fadeOut(500, function() {
+                        index = (index + 1) % images.length;
+                        $(this).attr("src", images[index]).fadeIn(500);
+                    });
+                }, 2500);
+            }
+
+            $("#start").click(function() {
+                if (!interval) {
+                    startSlideshow();
+                }
+            });
+
+            $("#stop").click(function() {
+                clearInterval(interval);
+                interval = null;
+            });
+        });
+    </script>
+</body>
+</html>
